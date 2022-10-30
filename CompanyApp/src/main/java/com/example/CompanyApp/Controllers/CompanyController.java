@@ -1,7 +1,9 @@
 package com.example.CompanyApp.Controllers;
 
+import com.example.CompanyApp.Exceptions.CompanyIDAlreadyExists;
 import com.example.CompanyApp.Model.Company;
 import com.example.CompanyApp.Model.Stock;
+import com.example.CompanyApp.ResponseHandler.MyResponse;
 import com.example.CompanyApp.Services.CompanyServiceImpl;
 import com.example.CompanyApp.Services.StockService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,13 +34,16 @@ public class CompanyController {
                 Set<Stock> stockSet = stockService.getAllStocks(company.getCompanyID());
                 company.setStockList(stockSet);
             }
-            return new ResponseEntity<>(companyList, HttpStatus.OK);
+            // return new ResponseEntity<>(companyList, HttpStatus.OK);
+
+            return MyResponse.generateCustomResponseFormat("Data Retrieved Successfully!", HttpStatus.OK, companyList);
         }
-        return new ResponseEntity<>("Could not Pull data", HttpStatus.CONFLICT);
+        return MyResponse.generateCustomResponseFormat("Could not Retrieve Data", HttpStatus.CONFLICT, companyList);
+        // return new ResponseEntity<>("Could not Pull data", HttpStatus.CONFLICT);
     }
 
     @PostMapping("/addCompany")
-    public ResponseEntity<?> addCompany(@RequestBody Company company){
+    public ResponseEntity<?> addCompany(@RequestBody Company company) throws CompanyIDAlreadyExists {
         if (companyService.addCompany(company)!=null){
             return new ResponseEntity<>(company, HttpStatus.CREATED);
         }
@@ -71,4 +76,6 @@ public class CompanyController {
         }
         return new ResponseEntity<>("No Data to display", HttpStatus.NO_CONTENT);
     }
+
+
 }

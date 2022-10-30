@@ -1,5 +1,6 @@
 package com.example.CompanyApp.Services;
 
+import com.example.CompanyApp.Exceptions.CompanyIDAlreadyExists;
 import com.example.CompanyApp.Model.Company;
 import com.example.CompanyApp.Repos.CompanyRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,12 +30,13 @@ public class CompanyServiceImpl implements CompanyService{
 
 
     @Override
-    public Company addCompany(Company company) {
-        if (company!=null){
-            companyRepo.saveAndFlush(company);
-            return company;
+    public Company addCompany(Company company) throws CompanyIDAlreadyExists {
+        Optional <Company> companyOptional = companyRepo.findById(company.getCompanyID());
+        if (companyOptional.isPresent()){
+            throw new CompanyIDAlreadyExists();
         }
-        return null;
+        companyRepo.saveAndFlush(company);
+        return company;
     }
 
 
