@@ -2,7 +2,6 @@ package com.example.CompanyApp.Model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
@@ -77,8 +76,9 @@ public class Company {
         return companyName;
     }
 
-    public void setCompanyName(String companyName) {
+    public String setCompanyName(String companyName) {
         this.companyName = companyName;
+        return companyName;
     }
 
     public String getCompanyCEO() {
