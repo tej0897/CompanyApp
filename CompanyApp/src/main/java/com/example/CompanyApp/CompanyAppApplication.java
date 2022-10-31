@@ -13,7 +13,7 @@ public class CompanyAppApplication {
 	public FilterRegistrationBean jwtFilter(){
 		FilterRegistrationBean obj = new FilterRegistrationBean();
 		obj.setFilter(new SecurityFilter());
-		obj.addUrlPatterns("/api/v1/*");
+		obj.addUrlPatterns("/api/*");
 		return obj;
 	}
 

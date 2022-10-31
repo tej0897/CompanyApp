@@ -62,6 +62,21 @@ public class CompanyServiceImpl implements CompanyService{
     }
 
     @Override
+    public boolean updateCompanyByID(int companyID, Company company) {
+        Company company1 = companyRepo.getById(company.getCompanyID());
+        if (company1 != null) {
+            company1.setCompanyName(company.getCompanyName());
+            company1.setCompanyCEO(company.getCompanyCEO());
+            company1.setTurnover(company.getTurnover());
+            company1.setWebsite(company.getWebsite());
+            companyRepo.saveAndFlush(company1);
+            return true;
+        }
+        return false;
+    }
+
+
+    @Override
     public Company getCompanyByID(int companyID) {
         Optional <Company> company = companyRepo.findById(companyID);
         if (company.isPresent()){

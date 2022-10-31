@@ -10,7 +10,7 @@ public interface CompanyService {
     public Company addCompany(Company company) throws CompanyIDAlreadyExists;
     public boolean deleteCompany(int companyID);
     public boolean updateCompany(Company company);
-
+    public boolean updateCompanyByID(int companyID, Company company);
     public Company getCompanyByID(int companyID);
 
 }

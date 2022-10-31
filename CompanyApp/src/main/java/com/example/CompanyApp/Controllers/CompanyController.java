@@ -67,6 +67,15 @@ public class CompanyController {
         return new ResponseEntity<>("cannot be updated", HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
+
+    @PutMapping("/updateCompany/{companyID}")
+    public ResponseEntity<?> updateCompanyByID(@PathVariable int companyID, @RequestBody Company company){
+        if (companyService.updateCompanyByID(companyID, company)){
+            return new ResponseEntity<>(company, HttpStatus.CREATED);
+        }
+        return new ResponseEntity<>("cannot be updated", HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
     @GetMapping("/getCompanyByID/{companyID}")
     public ResponseEntity<?> getCompanyByID(@PathVariable("companyID") int companyID){
         Company company = companyService.getCompanyByID(companyID);
